@@ -43,25 +43,25 @@
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
-                        <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+                        <form id="contactForm" data-sb-form-api-token="API_TOKEN" @submit.prevent="post.store">
                                 <div class="form-floating">
-                                    <input class="form-control" id="title" type="text" placeholder="Enter your title..." data-sb-validations="required" />
+                                    <input v-model="post.title" class="form-control" id="title" type="text" placeholder="Enter your title..." data-sb-validations="required" />
                                     <label>Title</label>
                                     <div class="invalid-feedback" data-sb-feedback="name:required">A title is required.</div>
                                 </div>
-                                    <div class="form-floating">
-                                    <input class="form-control" id="sub-title" type="text" placeholder="Enter your sub title..." data-sb-validations="required" />
+                                    <!-- <div class="form-floating">
+                                    <input v-model="post.sub-title" class="form-control" id="sub-title" type="text" placeholder="Enter your sub title..." data-sb-validations="required" />
                                     <label>Sub Title</label>
                                     <div class="invalid-feedback" data-sb-feedback="sub-title:required">A sub title is required.</div>
-                                </div>
+                                </div> -->
                                 <div class="form-floating">
-                                    <input class="form-control" id="email" type="email" placeholder="Enter your email..." data-sb-validations="required,email" />
+                                    <input v-model="post.email" class="form-control" id="email" type="email" placeholder="Enter your email..." data-sb-validations="required,email" />
                                     <label for="email">Email address</label>
                                     <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
                                     <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
                                 </div>
                                 <div class="form-floating">
-                                    <textarea class="form-control" id="message" placeholder="Enter your message here..." style="height: 12rem" data-sb-validations="required"></textarea>
+                                    <textarea v-model="post.text" class="form-control" id="message" placeholder="Enter your message here..." style="height: 12rem" data-sb-validations="required"></textarea>
                                     <label for="message">Message</label>
                                     <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
                                 </div>
@@ -128,8 +128,21 @@
         </footer>
 </template>
   <script>
-  export default {
-    name: 'AboutPage',
-  };
+  import axios from 'axios';
+      export default {
+       name: 'PostPage',
+        data() {
+            return {
+                post: {}
+            }
+        },
+        methods: {
+            store() {
+axios.post("http://127.0.0.1:8000/api/post", this.post)
+    .then(response => this.title = response);
+
+            }
+        }
+    }
   </script>
 <style></style>

@@ -39,19 +39,22 @@
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="card col-md-10 col-lg-8 col-xl-7">
                         <div class="card-body">
+                        <form @submit.prevent="register">
                         <div class="mb-3">
                         <label class="form-label">Name</label>
-                        <input type="text" class="form-control" placeholder="your name..">
+                        <input type="text" v-model="reg.name" class="form-control" placeholder="your name..">
                         </div>
                         <div class="mb-3">
                         <label class="form-label">Email address</label>
-                        <input type="email" class="form-control" placeholder="name@example.com">
+                        <input type="email" v-model="reg.email" class="form-control" placeholder="name@example.com">
                         </div>
                         <div class="mb-3">
                         <label class="form-label">Password</label>
-                        <input type="password" class="form-control" placeholder="your password">
+                        <input type="password" v-model="reg.password" class="form-control" placeholder="your password">
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Register</button>
+                        </form>
+                        
 
                         </div>
     
@@ -97,8 +100,21 @@
         </footer>
 </template>
   <script>
+  import axios from 'axios';
   export default {
     name: 'RegisterPage',
+    data() {
+            return {
+                reg: {}
+            }
+        },
+    methods: {
+            register() {
+axios.post("http://127.0.0.1:8000/api/register", this.reg)
+    .then(response => this.title = response);
+
+            }
+        }
   };
   </script>
 <style></style>

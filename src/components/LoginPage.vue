@@ -39,16 +39,17 @@
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="card col-md-10 col-lg-8 col-xl-7">
                         <div class="card-body">
+                        <form @submit.prevent="login">
                         <div class="mb-3">
                         <label class="form-label">Email address</label>
-                        <input type="email" class="form-control" placeholder="name@example.com">
+                        <input type="email" v-model="log.email" class="form-control" placeholder="name@example.com">
                         </div>
                         <div class="mb-3">
                         <label class="form-label">Password</label>
-                        <input type="password" class="form-control" placeholder="your password">
+                        <input type="password" v-model="log.password" class="form-control" placeholder="your password">
                         </div>
                         <button type="submit" class="btn btn-primary w-100">Login</button>
-
+                        </form>
                         </div>
     
                     </div>
@@ -93,8 +94,21 @@
         </footer>
 </template>
   <script>
+    import axios from 'axios';
   export default {
     name: 'LoginPage',
+    data() {
+            return {
+                log: {}
+            }
+        },
+    methods: {
+            login() {
+axios.get("http://127.0.0.1:8000/api/login", this.log)
+    .then(response => this.title = response);
+
+            }
+        }
   };
   </script>
 <style></style>
